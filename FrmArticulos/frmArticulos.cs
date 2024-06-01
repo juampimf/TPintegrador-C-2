@@ -73,5 +73,12 @@ namespace FrmArticulos
           
 
         }
+
+        private void btnAgregar_Click(object sender, EventArgs e)
+        {
+            frmAltaArticulos alta = new frmAltaArticulos();
+            alta.ShowDialog();
+            cargar();
+        }
     }
 }

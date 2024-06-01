@@ -56,5 +56,31 @@ namespace Acceso_a_Datos
             }
 
         }
+
+        public void agregar(Articulo nuevo)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("insert into ARTICULOS(Codigo, Nombre, Descripcion, IdMarca, IdCategoria, ImagenUrl, Precio) values (@Codigo, @Nombre, @Descripcion, @IdMarca, @IdCategoria, @ImagenUrl, @Precio)");
+                datos.setearParametro("@Codigo",nuevo.CodigoArticulo);
+                datos.setearParametro("@Nombre",nuevo.Nombre);
+                datos.setearParametro("@Descripcion",nuevo.Descripcion);
+                datos.setearParametro("@IdMarca",nuevo.Marca.id);
+                datos.setearParametro("@IdCategoria",nuevo.Categoria.Id);
+                datos.setearParametro("@ImagenUrl",nuevo.ImagenUrl);
+                datos.setearParametro("@Precio",nuevo.Precio);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConeccion();
+            }
+        }
     }
 }
