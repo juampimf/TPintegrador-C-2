@@ -113,6 +113,7 @@
             // 
             // cboMarca
             // 
+            this.cboMarca.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboMarca.FormattingEnabled = true;
             this.cboMarca.Location = new System.Drawing.Point(149, 184);
             this.cboMarca.Name = "cboMarca";
@@ -121,6 +122,7 @@
             // 
             // cboCategoria
             // 
+            this.cboCategoria.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboCategoria.FormattingEnabled = true;
             this.cboCategoria.Location = new System.Drawing.Point(149, 216);
             this.cboCategoria.Name = "cboCategoria";
@@ -131,7 +133,7 @@
             // 
             this.pbxArticulos.Location = new System.Drawing.Point(323, 83);
             this.pbxArticulos.Name = "pbxArticulos";
-            this.pbxArticulos.Size = new System.Drawing.Size(170, 228);
+            this.pbxArticulos.Size = new System.Drawing.Size(261, 228);
             this.pbxArticulos.TabIndex = 9;
             this.pbxArticulos.TabStop = false;
             // 
@@ -214,6 +216,7 @@
             this.Controls.Add(this.lblCodigo);
             this.Name = "frmAltaArticulos";
             this.Text = "frmAltaArticulos";
+            this.Load += new System.EventHandler(this.frmAltaArticulos_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbxArticulos)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

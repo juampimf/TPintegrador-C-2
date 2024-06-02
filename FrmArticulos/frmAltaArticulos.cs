@@ -15,7 +15,7 @@ namespace FrmArticulos
     public partial class frmAltaArticulos : Form
     {
         private Articulo articulo = null;   
-        private OpenFileDialog archivo = null;
+        //private OpenFileDialog archivo = null;
         public frmAltaArticulos()
         {
             InitializeComponent();
@@ -25,8 +25,44 @@ namespace FrmArticulos
         {
             InitializeComponent();
             this.articulo = articulo;
-            Text = "Modificar Articulo";
+            Text = "modificar articulo";
 
+        }
+        private void frmAltaArticulos_Load(object sender, EventArgs e)
+        {
+            MarcaDatos marcaDatos = new MarcaDatos();
+            CategoriaDatos categoriaDatos = new CategoriaDatos();
+
+            try
+            {
+                cboMarca.DataSource = marcaDatos.listar();
+                cboMarca.ValueMember = "Id";
+                cboMarca.DisplayMember = "Descripcion";
+                cboCategoria.DataSource = categoriaDatos.listar();
+                cboCategoria.ValueMember = "Id";
+                cboCategoria.DisplayMember = "Descripcion";
+
+                if (articulo != null)
+                {
+                    txtCodigo.Text = articulo.CodigoArticulo;
+                    txtNombre.Text = articulo.Nombre;
+                    txtDescripcion.Text = articulo.Descripcion;
+                    txtPrecio.Text = articulo.Precio.ToString();
+                    txtImagenUrl.Text = articulo.ImagenUrl;
+                    cargarImagen(articulo.ImagenUrl);
+                    cboMarca.SelectedValue = articulo.Marca.id;
+                    cboCategoria.SelectedValue = articulo.Categoria.Id;
+
+
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.ToString());
+            }
         }
 
 
@@ -36,6 +72,7 @@ namespace FrmArticulos
         }
         private void btnAceptar_Click(object sender, EventArgs e)
         {
+            Articulo articulo = new Articulo();
             ArticuloDatos datos = new ArticuloDatos();
 
             try
@@ -74,5 +111,22 @@ namespace FrmArticulos
                 MessageBox.Show(ex.ToString());
             }
         }
+
+        
+
+        private void cargarImagen(string imagen)
+        {
+            try
+            {
+                pbxArticulos.Load(imagen);
+            }
+            catch (Exception )
+            {
+
+                pbxArticulos.Load("https://static.vecteezy.com/system/resources/previews/005/337/799/non_2x/icon-image-not-found-free-vector.jpg");
+            }
+        }
+
+        
     }
 }

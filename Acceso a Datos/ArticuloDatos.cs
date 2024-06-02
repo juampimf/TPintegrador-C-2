@@ -21,7 +21,7 @@ namespace Acceso_a_Datos
             {
                 conexion.ConnectionString = "server=.\\SQLEXPRESS; database=CATALOGO_DB; integrated security=true";
                 comando.CommandType = System.Data.CommandType.Text;
-                comando.CommandText = "select A.Id,Codigo, Nombre, A.Descripcion, ImagenUrl, M.Descripcion Marca, Precio, C.Descripcion Categoria, A.IdMarca, A.IdCategoria from ARTICULOS A, MARCAS M, CATEGORIAS C where A.IdMarca = M.id and A.IdCategoria = C.Id";
+                comando.CommandText = "select A.Id,Codigo, Nombre, A.Descripcion, ImagenUrl, M.Descripcion Marca,Precio, C.Descripcion Categoria from ARTICULOS A, MARCAS M, CATEGORIAS C where A.IdMarca = M.id and A.IdCategoria = C.Id";
                 comando.Connection = conexion;
 
                 conexion.Open();
@@ -30,6 +30,7 @@ namespace Acceso_a_Datos
                 while (lector.Read())
                 {
                     Articulo aux = new Articulo();
+                    aux.id = (int)lector["Id"];
                     aux.Nombre = (string)lector["Nombre"] ;
                     aux.Descripcion = (string)lector["Descripcion"];
                     aux.Precio = (decimal)lector["Precio"];
@@ -38,10 +39,10 @@ namespace Acceso_a_Datos
                         aux.ImagenUrl = (string)lector["ImagenUrl"];
                     aux.Marca = new Marca();
                     aux.Marca.id = (int)lector["Id"];
-                    aux.Marca.Descripcion = (string)lector["Descripcion"];
+                    aux.Marca.Descripcion = (string)lector["Marca"];
                     aux.Categoria = new Categoria();
                     aux.Categoria.Id = (int)lector["Id"];
-                    aux.Categoria.Descripcion = (string)lector["Descripcion"];
+                    aux.Categoria.Descripcion = (string)lector["Categoria"];
 
                     lista.Add(aux);
                 }
@@ -63,7 +64,7 @@ namespace Acceso_a_Datos
 
             try
             {
-                datos.setearConsulta("insert into ARTICULOS(Codigo, Nombre, Descripcion, IdMarca, IdCategoria, ImagenUrl, Precio) values (@Codigo, @Nombre, @Descripcion, @IdMarca, @IdCategoria, @ImagenUrl, @Precio)");
+                datos.setearConsulta("insert into ARTICULOS(Codigo, Nombre, Descripcion, IdMarca, IdCategoria, ImagenUrl, Precio) values (@Codigo, @Nombre, @Descripcion,@IdMarca,@IdCategoria, @ImagenUrl, @Precio)");
                 datos.setearParametro("@Codigo",nuevo.CodigoArticulo);
                 datos.setearParametro("@Nombre",nuevo.Nombre);
                 datos.setearParametro("@Descripcion",nuevo.Descripcion);
@@ -71,6 +72,7 @@ namespace Acceso_a_Datos
                 datos.setearParametro("@IdCategoria",nuevo.Categoria.Id);
                 datos.setearParametro("@ImagenUrl",nuevo.ImagenUrl);
                 datos.setearParametro("@Precio",nuevo.Precio);
+                datos.ejecutarAccion();
             }
             catch (Exception ex)
             {
