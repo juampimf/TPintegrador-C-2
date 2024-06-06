@@ -5,17 +5,19 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Configuration;
 
 namespace FrmArticulos
 {
     public partial class frmAltaArticulos : Form
     {
         private Articulo articulo = null;   
-        //private OpenFileDialog archivo = null;
+        private OpenFileDialog archivo = null;
         public frmAltaArticulos()
         {
             InitializeComponent();
@@ -50,7 +52,7 @@ namespace FrmArticulos
                     txtPrecio.Text = articulo.Precio.ToString();
                     txtImagenUrl.Text = articulo.ImagenUrl;
                     cargarImagen(articulo.ImagenUrl);
-                    cboMarca.SelectedValue = articulo.Marca.id;
+                    cboMarca.SelectedValue = articulo.Marca.Id;
                     cboCategoria.SelectedValue = articulo.Categoria.Id;
 
 
@@ -72,7 +74,7 @@ namespace FrmArticulos
         }
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            Articulo articulo = new Articulo();
+            
             ArticuloDatos datos = new ArticuloDatos();
 
             try
@@ -88,9 +90,9 @@ namespace FrmArticulos
                 articulo.ImagenUrl = txtImagenUrl.Text;
                 articulo.Precio = decimal.Parse(txtPrecio.Text);
 
-                if(articulo.id != 0)
+                if(articulo.Id != 0)
                 {
-                   // datos.modificar(articulo);
+                    datos.modificar(articulo);
                     MessageBox.Show("Modificado exitosamente");
                 }
                 else
@@ -99,6 +101,10 @@ namespace FrmArticulos
                     MessageBox.Show("Agregado exitosamente");
 
                 }
+
+
+                if (archivo != null && !(txtImagenUrl.Text.ToUpper().Contains("HTTP")))
+                    File.Copy(archivo.FileName, ConfigurationManager.AppSettings["carpeta-imagenes"] + archivo.SafeFileName);
 
                 Close();
 
@@ -118,15 +124,32 @@ namespace FrmArticulos
         {
             try
             {
-                pbxArticulos.Load(imagen);
+                pbxAltaArticulos.Load(imagen);
             }
             catch (Exception )
             {
 
-                pbxArticulos.Load("https://static.vecteezy.com/system/resources/previews/005/337/799/non_2x/icon-image-not-found-free-vector.jpg");
+                pbxAltaArticulos.Load("https://static.vecteezy.com/system/resources/previews/005/337/799/non_2x/icon-image-not-found-free-vector.jpg");
             }
         }
 
-        
+        private void btnAgregarImagen_Click(object sender, EventArgs e)
+        {
+            archivo = new OpenFileDialog();
+            archivo.Filter = "jpg|*.jpg;|png|*.png";
+            archivo.ShowDialog();
+            if(archivo.ShowDialog() == DialogResult.OK)
+            {
+                txtImagenUrl.Text = archivo.FileName;
+                cargarImagen(archivo.FileName);
+
+                
+            }
+        }
+
+        private void txtImagenUrl_Leave(object sender, EventArgs e)
+        {
+            cargarImagen(txtImagenUrl.Text);
+        }
     }
 }

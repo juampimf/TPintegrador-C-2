@@ -23,7 +23,7 @@ namespace Acceso_a_Datos
                 while (datos.Lector.Read())
                 {
                     Marca aux = new Marca();
-                    aux.id = (int)datos.Lector["Id"];
+                    aux.Id = (int)datos.Lector["Id"];
                     aux.Descripcion = (string)datos.Lector["Descripcion"];
 
                     lista.Add(aux);

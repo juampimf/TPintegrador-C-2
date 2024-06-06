@@ -9,7 +9,7 @@ namespace dominio
 {
     public class Articulo
     {
-        public int id {  get; set; }
+        public int Id {  get; set; }
         [DisplayName("Código De Articulo")]
         public string CodigoArticulo { get; set; }
         
@@ -19,11 +19,11 @@ namespace dominio
 
         public string ImagenUrl {  get; set; } 
 
-        public decimal Precio { get; set; } 
-
         public Marca Marca {  get; set; }
         [DisplayName("Categoría")]
         public Categoria Categoria { get; set; }
+        public decimal Precio { get; set; } 
+
         
 
 

@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dominio", "Tp integrador\do
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Acceso a Datos", "Acceso a Datos\Acceso a Datos.csproj", "{C33F4D7E-EE3D-4F92-AF62-246869288D09}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrmArticulos", "FrmArticulos\FrmArticulos.csproj", "{7506178D-EA66-40D7-9327-BEC2DEB49AA9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "frmArticulos", "FrmArticulos\frmArticulos.csproj", "{7506178D-EA66-40D7-9327-BEC2DEB49AA9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

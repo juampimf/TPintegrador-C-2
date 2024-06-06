@@ -35,7 +35,7 @@ namespace Acceso_a_Datos
             try
             {
                 conexion.Open();
-                lector = comando.ExecuteReader();   
+                lector = comando.ExecuteReader();
             }
             catch (Exception ex)
             {
@@ -70,8 +70,23 @@ namespace Acceso_a_Datos
                 lector.Close();
             conexion.Close();
         }
-            
-            
 
+        public void eliminar(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("delete from ARTICULOS where Id = @Id");
+                datos.setearParametro("@Id", id);
+                datos.ejecutarAccion();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
     }
 }
