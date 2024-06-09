@@ -89,6 +89,11 @@ namespace FrmArticulos
                 articulo.Categoria = (Categoria)cboCategoria.SelectedItem;
                 articulo.ImagenUrl = txtImagenUrl.Text;
                 articulo.Precio = decimal.Parse(txtPrecio.Text);
+                
+              
+
+               
+                    
 
                 if(articulo.Id != 0)
                 {
@@ -102,9 +107,9 @@ namespace FrmArticulos
 
                 }
 
-
                 if (archivo != null && !(txtImagenUrl.Text.ToUpper().Contains("HTTP")))
                     File.Copy(archivo.FileName, ConfigurationManager.AppSettings["carpeta-imagenes"] + archivo.SafeFileName);
+
 
                 Close();
 
@@ -113,13 +118,28 @@ namespace FrmArticulos
             }
             catch (Exception ex)
             {
+                if (!(soloNumeros(txtPrecio.Text)) || string.IsNullOrEmpty(txtPrecio.Text))
+                {
+                    MessageBox.Show("Por favor escriba un nro en el campo Precio...");
+                }
+                else
+                {
 
                 MessageBox.Show(ex.ToString());
+                }
             }
         }
 
-        
 
+        private bool soloNumeros(string cadena)
+        {
+            foreach (char caracter in cadena)
+            {
+                if (!(char.IsNumber(caracter)))
+                    return false;
+            }
+            return true;
+        }
         private void cargarImagen(string imagen)
         {
             try
@@ -137,7 +157,7 @@ namespace FrmArticulos
         {
             archivo = new OpenFileDialog();
             archivo.Filter = "jpg|*.jpg;|png|*.png";
-            archivo.ShowDialog();
+           
             if(archivo.ShowDialog() == DialogResult.OK)
             {
                 txtImagenUrl.Text = archivo.FileName;
@@ -150,6 +170,6 @@ namespace FrmArticulos
         private void txtImagenUrl_Leave(object sender, EventArgs e)
         {
             cargarImagen(txtImagenUrl.Text);
-        }
+        }    
     }
 }

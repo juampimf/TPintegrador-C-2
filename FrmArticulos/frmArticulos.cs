@@ -71,11 +71,15 @@ namespace FrmArticulos
 
         private void ocultarColumnas()
         {
+            dgvArticulos.Columns["CodigoArticulo"].Visible = false;
             dgvArticulos.Columns["ImagenUrl"].Visible = false;
             dgvArticulos.Columns["Id"].Visible = false;
-          
+            dgvArticulos.Columns["Descripcion"].Visible = false;
+            dgvArticulos.Columns["Marca"].Visible = false;
+            dgvArticulos.Columns["Categoria"].Visible = false;
 
         }
+
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
@@ -86,18 +90,28 @@ namespace FrmArticulos
 
         private void btnModificar_Click(object sender, EventArgs e)
         {
-             Articulo seleccionado;
+            if (dgvArticulos.CurrentRow != null)
+            {
+            Articulo seleccionado;
             seleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
-
+                
             frmAltaArticulos modificar = new frmAltaArticulos(seleccionado);
             modificar.ShowDialog();
             cargar();
+            }
+            else
+            {
+                MessageBox.Show("Por favor elija el articulo que quiera modificar");
+            }
+
         }
 
         private void btnEliminar_Click(object sender, EventArgs e)
         {
             AccesoDatos datos = new AccesoDatos();
             Articulo seleccionado;
+            if (dgvArticulos.CurrentRow != null)
+            {
             try
             {
                DialogResult respuesta = MessageBox.Show("¿De verdad queres eliminarlo?","Eliminando", MessageBoxButtons.YesNo,MessageBoxIcon.Warning);
@@ -113,6 +127,13 @@ namespace FrmArticulos
             {
 
                 throw ex;
+            }
+                
+            }
+            else
+            {
+                MessageBox.Show("Por favor elija el articulo que quiera eliminar");
+
             }
         }
 
@@ -162,12 +183,56 @@ namespace FrmArticulos
 
         }
 
+        private bool validarFiltro()
+        {
+            if(cboCampo.SelectedIndex < 0)
+            {
+                MessageBox.Show("Por favor, seleccione el campo para filtrar...");
+                return true;
+            }
+            if(cboCriterio.SelectedIndex < 0) 
+            {
+                MessageBox.Show("Por favor, seleccione el criterio para filtrar...");
+                return true;
+            }
+            if (cboCampo.SelectedItem.ToString() == "Precio")
+            {
+                if (string.IsNullOrEmpty(txtFiltroDb.Text))
+                {
+                    MessageBox.Show("Debes cargar el filtro para numéricos...");
+                    return true;
+                }
+                if (!(soloNumeros(txtFiltroDb.Text)))
+                {
+                    MessageBox.Show("Solo nros para filtrar por un campo numerico...");
+                    return true;    
+
+                }
+
+            }
+
+            return false;
+
+        }
+
+        private bool soloNumeros(string cadena)
+        {
+            foreach (char caracter in cadena)
+            {
+                if(!(char.IsNumber(caracter)))
+                    return false;   
+            }
+            return true;
+        }
         private void btnFiltro_Click(object sender, EventArgs e)
         {
 
             ArticuloDatos datos = new ArticuloDatos();  
+
             try
             {
+                if(validarFiltro())
+                    return;
 
             string campo = cboCampo.SelectedItem.ToString();
             string criterio = cboCriterio.SelectedItem.ToString();
@@ -183,4 +248,8 @@ namespace FrmArticulos
 
         }
     }
+
 }
+
+
+
