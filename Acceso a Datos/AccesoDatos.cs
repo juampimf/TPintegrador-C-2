@@ -88,5 +88,10 @@ namespace Acceso_a_Datos
             }
 
         }
+
+        internal void ejecutarLectura(string v, string descripcion)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

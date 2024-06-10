@@ -129,6 +129,22 @@ namespace Acceso_a_Datos
 
         }
 
+        public void verDetalle(Articulo mostrar)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("select Descripcion = @Descripcion from ARTICULOS Where Id = @Id");
+                datos.ejecutarLectura("@Descripcion", mostrar.Descripcion);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
         public List<Articulo> filtrar(string campo, string criterio, string filtro)
         {
             List<Articulo> lista = new List<Articulo>();

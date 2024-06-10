@@ -247,6 +247,24 @@ namespace FrmArticulos
             }
 
         }
+
+        private void btnVerDetalle_Click(object sender, EventArgs e)
+        {
+            if (dgvArticulos.CurrentRow != null)
+            {
+                Articulo seleccionado;
+                seleccionado = (Articulo)dgvArticulos.CurrentRow.DataBoundItem;
+
+                frmVerDetalles verDetalle = new frmVerDetalles(seleccionado);
+                verDetalle.ShowDialog();
+                
+                
+            }
+            else
+            {
+                MessageBox.Show("Por favor elija algun articulo...");
+            }
+        }
     }
 
 }
